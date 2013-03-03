@@ -86,21 +86,31 @@ public class FileIO {
 	 * @return
 	 */
 	public boolean removeTask(FilePath path, Task task){
+		Log.i(TAG, "Attempting removeTask");
 		if(fileExists(path)){
 			try {
-				RandomAccessFile raf = new RandomAccessFile(path.getName(), "rw");
+				File f = new File(path.getURI());
+				RandomAccessFile raf = new RandomAccessFile(f, "rw");
 				boolean found = false;
 				String row = task.getId()+";"+task.getDescription()+";";
 				String line;
 				long lastPos = 0;
+				Log.i(TAG, "Tries to find line '"+row+"'");
 				while(!found && (line = raf.readLine()) != null){
-					if(line.matches(row)){
+					Log.d(TAG, "Current row: '"+line+"'");
+					if(line.equals(row)){
+						Log.d(TAG, "Matching row was found");
 						found = true;
 						String restOfFile = "";
-						while((restOfFile += raf.readLine()) != null){
+						String tempStr;
+						while((tempStr = raf.readLine()) != null){
+							restOfFile+=tempStr;
+							restOfFile+="\n";
 						}
 						raf.seek(lastPos);
+						raf.setLength(lastPos);
 						raf.writeBytes(restOfFile);
+						raf.writeBytes("");
 						raf.close();
 						return true;
 					}

@@ -69,6 +69,21 @@ public class FileIOTest extends AndroidTestCase {
 		assertEquals("Loaded list is not the same as saved list",tasks,instance.load(fp));
 	}
 	
+	public void testRemoveTask(){
+		assertTrue("Error during creation", instance.create(fp));
+		assertTrue("Error during save", instance.append(fp, tasks));
+		Task t1 = tasks.get(1);
+		assertTrue("Error during remove", instance.removeTask(fp, t1));
+		ArrayList<Task> oneRemoved = new ArrayList<Task>();
+		oneRemoved.addAll(tasks);
+		oneRemoved.remove(t1);
+		for(Task task : instance.load(fp)){
+			System.out.println(task.getDescription());
+		}
+		assertEquals("Removed did not work as anticipated", oneRemoved, instance.load(fp));
+		
+	}
+	
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
