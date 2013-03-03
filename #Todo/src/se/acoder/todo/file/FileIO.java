@@ -1,12 +1,18 @@
 package se.acoder.todo.file;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
 
+import android.R.raw;
 import android.content.Context;
 import android.util.Log;
 
@@ -28,28 +34,83 @@ public class FileIO {
 		}
 		return instance;
 	}
+	public boolean create(FilePath path){
+		Context c = path.getContext();
+		if(fileExists(path)){
+			delete(path);
+		}
+		try {
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+					c.openFileOutput(path.getName(), Context.MODE_APPEND)));
+			writer.append("Id;Task;");
+			writer.close();
+			
+		} catch (FileNotFoundException e) {
+			Log.d(TAG, "File not found");
+		} catch (IOException e) {
+			Log.d(TAG, "IO-Exception");
+		}
+		return false;
+	}
 	/**
 	 * Saves at CSV format, using ";" as delimiter.
 	 * @param savePath Name of save-file.
-	 * @param saveData Array of strings to be saved.
+	 * @param rows Array of strings to be saved.
 	 * @param c The current context.
 	 * @return true if save successful.
 	 */
-	public boolean save(FilePath savePath, String[] saveData) {
-		Context c = savePath.getContext();
-		String writableData = "";
-		for(int i = 0; i<saveData.length; i++){
-			writableData += saveData[i]+";";
+	public boolean append(FilePath savePath, ArrayList<Task> rows) {
+		if(fileExists(savePath)){
+			Context c = savePath.getContext();
+			try {
+				BufferedWriter writer = new BufferedWriter( new OutputStreamWriter(
+						c.openFileOutput(savePath.getName(), Context.MODE_APPEND)));
+				for(Task t : rows){
+					writer.append(t.getId()+";"+t.getDescription()+";");
+					writer.newLine();
+					writer.flush();
+				}
+				writer.close();
+				return true;
+			} catch (FileNotFoundException e) {
+				Log.d(TAG, "Exception: File not found.");
+			} catch (IOException e) {
+				Log.d("TAG", "Exception: IO");
+			}
 		}
-		try {
-			FileOutputStream fos = c.openFileOutput(savePath.getName(), Context.MODE_APPEND);
-			fos.write(writableData.getBytes());
-			fos.close();
-			return true;
-		} catch (FileNotFoundException e) {
-			Log.d(TAG, "Exception: File not found.");
-		} catch (IOException e) {
-			Log.d("TAG", "Exception: IO");
+		return false;
+	}
+	/**
+	 * Removes a single line representing a task.
+	 * @param path The path to the file.
+	 * @param task The task that is to be removed.
+	 * @return
+	 */
+	public boolean removeTask(FilePath path, Task task){
+		Context c = path.getContext();
+		if(fileExists(path)){
+			try {
+				RandomAccessFile raf = new RandomAccessFile(path.getName(), "rw");
+				boolean found = false;
+				String row = task.getId()+";"+task.getDescription()+";";
+				String line;
+				long lastPos = 0;
+				while(!found && (line = raf.readLine()) != null){
+					if(line.matches(row)){
+						found = true;
+						String restOfFile = "";
+						while((restOfFile += raf.readLine()) != null){
+						}
+						raf.seek(lastPos);
+						raf.writeBytes(restOfFile);
+					}
+					lastPos = raf.getFilePointer(); 
+				}
+			} catch (FileNotFoundException e) {
+				Log.d(TAG,"File not found.");
+			} catch (IOException e) {
+				Log.d(TAG, "IO Exception");
+			}
 		}
 		return false;
 	}
@@ -64,18 +125,21 @@ public class FileIO {
 		File f = new File(path.getURI());
 		return f.isFile();
 	}
-	public String[] load(FilePath path) {
+	public ArrayList<Task> load(FilePath path) {
 		Context c = path.getContext();
+		ArrayList<Task> lines = new ArrayList<Task>();
 		try {
 			BufferedReader br = new BufferedReader(
 					new InputStreamReader(c.openFileInput(path.getName())));
-			StringBuilder sb = new StringBuilder();
 			String rawline;
+			//Skip first line
+			Log.d(TAG, br.readLine());
 			while( (rawline = br.readLine()) != null){
-				sb.append(rawline);
+				Log.d(TAG, rawline);
+				String[] line = rawline.split(";");
+				Task task = new Task(Integer.parseInt(line[0]), line[1]);
+				lines.add(task);
 			}
-			String[] lines = sb.toString().trim().split(";");
-			Log.d(TAG, sb.toString());
 			return lines;
 			
 		} catch (FileNotFoundException e) {
