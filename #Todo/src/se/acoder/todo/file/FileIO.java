@@ -40,6 +40,7 @@ public class FileIO {
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
 					c.openFileOutput(path.getName(), Context.MODE_APPEND)));
 			writer.append("Id;Task;");
+			writer.newLine();
 			writer.close();
 			return true;
 			
@@ -133,10 +134,11 @@ public class FileIO {
 					new InputStreamReader(c.openFileInput(path.getName())));
 			String rawline;
 			//Skip first line
-			Log.d(TAG, br.readLine());
+			Log.i(TAG, "Skipping: "+ br.readLine());
 			while( (rawline = br.readLine()) != null){
 				Log.d(TAG, rawline);
 				String[] line = rawline.split(";");
+				Log.d(TAG, line[0]+ ", "+line[1] );
 				Task task = new Task(Integer.parseInt(line[0]), line[1]);
 				lines.add(task);
 			}

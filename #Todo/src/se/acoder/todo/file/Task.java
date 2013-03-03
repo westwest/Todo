@@ -20,4 +20,15 @@ public class Task {
 	public String getDescription(){
 		return description;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o != null && o.getClass() == getClass()){
+			Task other = (Task) o;
+			if(id == other.id && description.equals(other.description))
+				return true;
+		}
+		return false;
+		
+	}
 }
