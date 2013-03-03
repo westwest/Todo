@@ -4,15 +4,12 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
-import android.R.raw;
 import android.content.Context;
 import android.util.Log;
 
@@ -44,6 +41,7 @@ public class FileIO {
 					c.openFileOutput(path.getName(), Context.MODE_APPEND)));
 			writer.append("Id;Task;");
 			writer.close();
+			return true;
 			
 		} catch (FileNotFoundException e) {
 			Log.d(TAG, "File not found");
@@ -87,7 +85,6 @@ public class FileIO {
 	 * @return
 	 */
 	public boolean removeTask(FilePath path, Task task){
-		Context c = path.getContext();
 		if(fileExists(path)){
 			try {
 				RandomAccessFile raf = new RandomAccessFile(path.getName(), "rw");
@@ -103,9 +100,12 @@ public class FileIO {
 						}
 						raf.seek(lastPos);
 						raf.writeBytes(restOfFile);
+						raf.close();
+						return true;
 					}
 					lastPos = raf.getFilePointer(); 
 				}
+				raf.close();
 			} catch (FileNotFoundException e) {
 				Log.d(TAG,"File not found.");
 			} catch (IOException e) {
