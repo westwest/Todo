@@ -9,7 +9,7 @@ public class Task {
 	private String description;
 	private int id;
 	
-	protected Task(int id, String description){
+	public Task(int id, String description){
 		this.id = id;
 		this.description = description;
 	}

@@ -1,5 +1,6 @@
 package se.acoder.todo;
 
+import se.acoder.todo.file.TaskManager;
 import se.acoder.todo.util.SystemUiHider;
 
 import android.annotation.TargetApi;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 /**
  * 
@@ -21,6 +24,8 @@ public class TodoActivity extends Activity {
 	private static final boolean TOGGLE_ON_CLICK = true;
 	private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
 	private SystemUiHider mSystemUiHider;
+	
+	private TaskManager tm;
 
 	public void addNewItem(View v){
 		Intent addItemIntent = new Intent(this, AddActivity.class);
@@ -30,7 +35,23 @@ public class TodoActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		//populate list
+		ListView ls = (ListView) findViewById(R.id.task_list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, 
+        		android.R.layout.simple_list_item_1, tm.getTaskList());
+        ls.setAdapter(adapter);
+        
+        /*
+        spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int pos, long id) {
+				String item = parent.getItemAtPosition(pos).toString();
+				getCategoryManager().setActiveCategory(item);
+			}
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+        	
+        });
+        */
 	}
 	
 	@Override
@@ -38,6 +59,7 @@ public class TodoActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_todo);
+		tm = TaskManager.getInstance(getApplicationContext());
 
 		final View controlsView = findViewById(R.id.fullscreen_content_controls);
 		final View contentView = findViewById(R.id.fullscreen_content);

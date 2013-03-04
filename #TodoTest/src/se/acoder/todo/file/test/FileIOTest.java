@@ -14,7 +14,6 @@ import android.test.mock.MockContentResolver;
 import android.util.Log;
 
 public class FileIOTest extends AndroidTestCase {
-	private Context mockContext;
 	private FileIO instance;
 	private FilePath fp;
 	private ArrayList<Task> tasks;
@@ -22,7 +21,6 @@ public class FileIOTest extends AndroidTestCase {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		mockContext = new IsolatedContext(new MockContentResolver(), getContext());
 		instance = FileIO.getInstance();
 		fp = new FilePath("Foo Bar", getContext());
 		
