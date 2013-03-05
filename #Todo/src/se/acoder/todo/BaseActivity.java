@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
-public class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity {
 	private TaskManager tm;
 
 	@Override

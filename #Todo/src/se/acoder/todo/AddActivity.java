@@ -26,12 +26,4 @@ public class AddActivity extends BaseActivity {
 		Intent goBack = new Intent(this, TodoActivity.class);
 		startActivity(goBack);
 	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.add, menu);
-		return true;
-	}
-
 }

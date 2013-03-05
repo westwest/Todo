@@ -31,7 +31,8 @@
         </activity>
         <activity
             android:name="se.acoder.todo.BaseActivity"
-            android:label="@string/title_activity_base" >
+            android:label="@string/title_activity_base"
+            android:theme="@android:style/Theme.Holo" >
         </activity>
     </application>
 
