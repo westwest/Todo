@@ -31,10 +31,10 @@
             android:layout_height="match_parent" >
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/add_task"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#333"
+                android:background="#222"
                 android:gravity="center"
                 android:text="+ Add Task"
                 android:textColor="#FFF"
