@@ -3,6 +3,7 @@ package se.acoder.todo.file;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * The class is basically a layer between the file-storage and the application
@@ -11,7 +12,7 @@ import android.content.Context;
  *
  */
 public class TaskManager {
-	//private final static String TAG = TaskManager.class.getSimpleName();
+	private final static String TAG = TaskManager.class.getSimpleName();
 	private final static String taskFileName = "taskList";
 	private static TaskManager instance;
 	private FilePath fp;
@@ -83,7 +84,12 @@ public class TaskManager {
 	 * @param task The task to remove.
 	 * @return True if removal was successful.
 	 */
-	public boolean removeTask(Task task){
-		return fio.removeTask(fp, task);
+	public boolean removeTask(int pos, String description){
+		ArrayList<Task> tasks = fio.load(fp);
+		Task task = tasks.get(pos);
+		Log.d(TAG, task.getDescription() + ", " + description);
+		if(description.equals(task.getDescription()))
+			return fio.removeTask(fp, task);
+		return false;
 	}
 }

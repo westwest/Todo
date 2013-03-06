@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item 
-        android:id="@+id/statistics" 
-        android:title="Stats"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:showAsAction="ifRoom|withText" />
-    
-
+        android:id="@+id/action_home" 
+        android:title="Tasks" 
+        android:icon="@android:drawable/ic_menu_agenda" 
+        android:showAsAction="ifRoom"/>
+    <item 
+        android:id="@+id/action_statistics" 
+        android:title="Statistics" 
+        android:titleCondensed="Stats" 
+        android:icon="@android:drawable/ic_menu_sort_by_size" 
+        android:visible="true"
+        android:showAsAction="ifRoom"/>
 </menu>

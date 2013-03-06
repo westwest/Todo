@@ -1,8 +1,10 @@
-package se.acoder.todo;
+package se.acoder.todo.activities;
+import se.acoder.todo.R;
+import se.acoder.todo.R.id;
+import se.acoder.todo.R.layout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 

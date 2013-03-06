@@ -9,12 +9,19 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/add_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Task description:"
+            android:text="Add Task"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#FFF" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter Task Description:"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
             android:id="@+id/task_description"
