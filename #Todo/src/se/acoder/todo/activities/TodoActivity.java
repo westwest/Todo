@@ -57,6 +57,7 @@ public class TodoActivity extends BaseActivity {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
+						doneTasks++;
 						getTaskManager().removeTask(taskId, description);
 						onStart();
 					}

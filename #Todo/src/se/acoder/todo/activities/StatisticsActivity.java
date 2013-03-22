@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class StatisticsActivity extends BaseActivity {
-	TextView text1, text2;
-	int totalTasks, doneTasks;
+	private TextView text1, text2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +19,11 @@ public class StatisticsActivity extends BaseActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		totalTasks = sp.getInt("totalTasks", 0);
-		doneTasks = sp.getInt("doneTasks", 0);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
 		text1.setText("Total number of tasks: " + totalTasks);
 		text2.setText("Completed Tasks: " + doneTasks);
 	}

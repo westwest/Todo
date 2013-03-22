@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 public abstract class BaseActivity extends Activity {
 	private final static String TAG = BaseActivity.class.getSimpleName();
+	protected static int totalTasks, doneTasks;
 	private TaskManager tm;
 	protected SharedPreferences sp;
 
@@ -26,6 +27,17 @@ public abstract class BaseActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		tm = TaskManager.getInstance(getApplicationContext());
 		sp = getSharedPreferences("statistics", MODE_PRIVATE);
+		sp.getInt("totalTasks", 0);
+		sp.getInt("doneTasks", 0);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		SharedPreferences.Editor editor = sp.edit();
+		editor.putInt("totalTasks", totalTasks);
+		editor.putInt("doneTasks", doneTasks);
+		editor.commit();
 	}
 	
 	public TaskManager getTaskManager(){

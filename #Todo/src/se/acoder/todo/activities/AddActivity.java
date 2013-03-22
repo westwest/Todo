@@ -21,6 +21,8 @@ public class AddActivity extends BaseActivity {
 		EditText description = (EditText) findViewById(R.id.task_description);
 		if(getTaskManager().addTask(description.getText().toString()) == null)
 			Log.w(TAG, "Task was not created successfully.");
+		else
+			totalTasks++;
 		goBack(v);
 	}
 
