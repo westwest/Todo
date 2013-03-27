@@ -92,13 +92,13 @@ public class FileIO {
 				File f = new File(path.getURI());
 				RandomAccessFile raf = new RandomAccessFile(f, "rw");
 				boolean found = false;
-				String row = task.getId()+";"+task.getDescription()+";";
+				String id = task.getId()+"";
 				String line;
 				long lastPos = 0;
-				Log.i(TAG, "Tries to find line '"+row+"'");
+				Log.i(TAG, "Tries to find task '"+id+"'");
 				while(!found && (line = raf.readLine()) != null){
 					Log.d(TAG, "Current row: '"+line+"'");
-					if(line.equals(row)){
+					if(line.split(";")[0].equals(id)){
 						Log.d(TAG, "Matching row was found");
 						found = true;
 						String restOfFile = "";

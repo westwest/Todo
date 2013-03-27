@@ -33,7 +33,7 @@ public class TodoActivity extends BaseActivity {
 	}
 	
 	@Override
-	protected void onStart() {
+	protected void onResume() {
 		super.onStart();
 		ListView ls = (ListView) findViewById(R.id.task_list);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, 
@@ -57,9 +57,9 @@ public class TodoActivity extends BaseActivity {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						doneTasks++;
-						getTaskManager().removeTask(taskId, description);
-						onStart();
+						if(getTaskManager().removeTask(taskId, description));
+							doneTasks++;
+						onResume();
 					}
 				});
 				builder.setNegativeButton("Cancel", new OnClickListener() {
