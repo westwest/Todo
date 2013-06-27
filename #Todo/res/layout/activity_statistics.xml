@@ -24,26 +24,35 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#CCC" />
 
-        <TextView
-            android:id="@+id/statistics_1"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="empty"
-            android:textColor="#FFF" />
+            android:orientation="vertical"
+            android:padding="20dp" >
 
-        <TextView
-            android:id="@+id/statistics_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="empty"
-            android:textColor="#fff" />
+            <TextView
+                android:id="@+id/statistics_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="empty"
+                android:textColor="#FFF" />
+
+            <TextView
+                android:id="@+id/statistics_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="empty"
+                android:textColor="#fff" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onReset"
-            android:text="Clear Statistics" />
+            android:text="Clear Statistics"
+            android:textColor="@android:color/primary_text_dark" />
 
     </LinearLayout>
 

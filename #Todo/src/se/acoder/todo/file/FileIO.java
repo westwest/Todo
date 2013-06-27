@@ -79,12 +79,7 @@ public class FileIO {
 		}
 		return false;
 	}
-	/**
-	 * Removes a single line representing a task.
-	 * @param path The path to the file.
-	 * @param task The task that is to be removed.
-	 * @return
-	 */
+
 	public boolean removeTask(FilePath path, Task task){
 		Log.i(TAG, "Attempting removeTask");
 		if(fileExists(path)){
