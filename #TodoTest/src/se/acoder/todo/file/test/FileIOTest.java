@@ -7,13 +7,11 @@ import java.util.ArrayList;
 import se.acoder.todo.file.FileIO;
 import se.acoder.todo.file.FilePath;
 import se.acoder.todo.file.Task;
-import android.content.Context;
 import android.test.AndroidTestCase;
-import android.test.IsolatedContext;
-import android.test.mock.MockContentResolver;
 import android.util.Log;
 
 public class FileIOTest extends AndroidTestCase {
+	private final static String TAG = FileIOTest.class.getSimpleName();
 	private FileIO instance;
 	private FilePath fp;
 	private ArrayList<Task> tasks;
@@ -75,8 +73,14 @@ public class FileIOTest extends AndroidTestCase {
 		ArrayList<Task> oneRemoved = new ArrayList<Task>();
 		oneRemoved.addAll(tasks);
 		oneRemoved.remove(t1);
-		for(Task task : instance.load(fp)){
-			System.out.println(task.getDescription());
+		
+		ArrayList<Task> tasks = instance.load(fp);
+		assertTrue(tasks.size() == oneRemoved.size());
+		if(tasks.size() == oneRemoved.size()){
+			for(int i = 0; i<tasks.size(); i++){
+				tasks.get(i).equals(oneRemoved.get(i));
+				Log.d(TAG, "Task description: "+ tasks.get(i).getDescription());
+			}
 		}
 		assertEquals("Removed did not work as anticipated", oneRemoved, instance.load(fp));
 		

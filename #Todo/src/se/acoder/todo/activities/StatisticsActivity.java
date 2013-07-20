@@ -1,7 +1,6 @@
 package se.acoder.todo.activities;
 
 import se.acoder.todo.R;
-import se.acoder.todo.file.TaskManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -26,13 +25,12 @@ public class StatisticsActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		text1.setText("Total number of tasks: " + totalTasks);
-		text2.setText("Completed Tasks: " + doneTasks);
+		text1.setText("Total number of tasks: " + sk.getTotalTasks());
+		text2.setText("Completed Tasks: " + sk.getDoneTasks());
 	}
 	
 	public void onReset(View v){
-		totalTasks = TaskManager.getInstance(this).getTaskList().length;
-		doneTasks = 0;
+		sk.resetStats();
 		onResume();
 	}
 

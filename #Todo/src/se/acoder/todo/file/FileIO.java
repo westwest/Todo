@@ -141,9 +141,9 @@ public class FileIO {
 			//Skip first line
 			Log.i(TAG, "Skipping: "+ br.readLine());
 			while( (rawline = br.readLine()) != null){
-				Log.d(TAG, rawline);
+				Log.d(TAG, "Raw line: "+ rawline);
 				String[] line = rawline.split(";");
-				Log.d(TAG, line[0]+ ", "+line[1] );
+				Log.d(TAG, "Formatted line: "+ line[0]+ ", "+line[1] );
 				Task task = new Task(Integer.parseInt(line[0]), line[1]);
 				lines.add(task);
 			}

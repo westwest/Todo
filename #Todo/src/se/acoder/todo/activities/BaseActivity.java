@@ -2,19 +2,18 @@ package se.acoder.todo.activities;
 
 import se.acoder.todo.R;
 import se.acoder.todo.file.TaskManager;
+import se.acoder.todo.statistics.StatisticsKeeper;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public abstract class BaseActivity extends Activity {
 	private final static String TAG = BaseActivity.class.getSimpleName();
-	protected static int totalTasks, doneTasks;
+	protected StatisticsKeeper sk;
 	private TaskManager tm;
-	protected SharedPreferences sp;
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -26,18 +25,7 @@ public abstract class BaseActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		tm = TaskManager.getInstance(getApplicationContext());
-		sp = getSharedPreferences("statistics", MODE_PRIVATE);
-		sp.getInt("totalTasks", 0);
-		sp.getInt("doneTasks", 0);
-	}
-	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		SharedPreferences.Editor editor = sp.edit();
-		editor.putInt("totalTasks", totalTasks);
-		editor.putInt("doneTasks", doneTasks);
-		editor.commit();
+		sk = StatisticsKeeper.getInstance(getApplicationContext());
 	}
 	
 	public TaskManager getTaskManager(){

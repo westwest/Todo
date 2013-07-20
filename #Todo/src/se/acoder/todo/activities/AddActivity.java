@@ -1,12 +1,11 @@
 package se.acoder.todo.activities;
 import se.acoder.todo.R;
-import se.acoder.todo.R.id;
-import se.acoder.todo.R.layout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class AddActivity extends BaseActivity {
 	private final static String TAG = AddActivity.class.getSimpleName();
@@ -19,11 +18,18 @@ public class AddActivity extends BaseActivity {
 	
 	public void save(View v){
 		EditText description = (EditText) findViewById(R.id.task_description);
-		if(getTaskManager().addTask(description.getText().toString()) == null)
-			Log.w(TAG, "Task was not created successfully.");
-		else
-			totalTasks++;
-		goBack(v);
+		if(description.getText().length() != 0){
+			if(getTaskManager().addTask(description.getText().toString()) == null){
+				Log.w(TAG, "Task was not created successfully.");
+				Toast.makeText(this, "Error creating task", Toast.LENGTH_LONG).show();
+			}
+			else{
+				sk.addNew();
+				goBack(v);
+			}
+		} else{
+			Toast.makeText(this, "Please input a description", Toast.LENGTH_LONG).show();
+		}
 	}
 
 	public void goBack(View v){

@@ -25,7 +25,7 @@ public class TaskManager {
 	 */
 	public static TaskManager getInstance(Context context) {
 		if(instance == null){
-			synchronized ( FileIO .class){
+			synchronized ( TaskManager .class){
 				if(instance == null){
 					instance = new TaskManager(context);
 				}
@@ -65,11 +65,12 @@ public class TaskManager {
 	 */
 	public Task addTask(String description){
 		int lastIndex = fio.load(fp).size()-1;
+		Log.d(TAG, "Last index: " + lastIndex);
 		int id;
 		if(lastIndex < 0){
 			id = 0;
 		}else{
-			id = fio.load(fp).get(lastIndex).getId();
+			id = (fio.load(fp).get(lastIndex).getId())+1;
 		}
 		Task task = new Task(id, description);
 		ArrayList<Task> tasks = new ArrayList<Task>();

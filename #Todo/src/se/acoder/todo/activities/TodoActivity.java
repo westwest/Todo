@@ -1,8 +1,6 @@
 package se.acoder.todo.activities;
 
 import se.acoder.todo.R;
-import se.acoder.todo.R.id;
-import se.acoder.todo.R.layout;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -30,6 +28,7 @@ public class TodoActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_todo);
+		Log.i(TAG,"Created Successfully");
 	}
 	
 	@Override
@@ -57,8 +56,9 @@ public class TodoActivity extends BaseActivity {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
+						Log.d(TAG, "Id of clicked task: " + taskId);
 						if(getTaskManager().removeTask(taskId, description));
-							doneTasks++;
+							sk.markDone();
 						onResume();
 					}
 				});
