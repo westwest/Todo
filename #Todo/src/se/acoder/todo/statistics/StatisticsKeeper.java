@@ -3,6 +3,11 @@ import se.acoder.todo.file.TaskManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/**
+ * Keeps track of statistics during runtime.
+ * @author Johannes Westlund
+ *
+ */
 public class StatisticsKeeper {
 	private static StatisticsKeeper instance;
 	private Context context;

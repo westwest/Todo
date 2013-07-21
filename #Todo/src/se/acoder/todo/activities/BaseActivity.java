@@ -6,12 +6,15 @@ import se.acoder.todo.statistics.StatisticsKeeper;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/**
+ * 
+ * @author Johannes Westlund
+ *
+ */
 public abstract class BaseActivity extends Activity {
-	private final static String TAG = BaseActivity.class.getSimpleName();
 	protected StatisticsKeeper sk;
 	private TaskManager tm;
 
@@ -39,7 +42,6 @@ public abstract class BaseActivity extends Activity {
 	}
 	
 	private void onNavigation(MenuItem item) {
-		Log.d(TAG, "ActionBar Navigation");
 		Class<?> c = this.getClass();
 		switch (item.getItemId()) {
 		case R.id.action_home:

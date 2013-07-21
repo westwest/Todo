@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * 
+ * @author Johannes Westlund
+ *
+ */
 public class StatisticsActivity extends BaseActivity {
 	private TextView text1, text2;
 

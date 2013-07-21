@@ -3,7 +3,6 @@ package se.acoder.todo.file;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.util.Log;
 
 /**
  * The class is basically a layer between the file-storage and the application
@@ -12,7 +11,6 @@ import android.util.Log;
  *
  */
 public class TaskManager {
-	private final static String TAG = TaskManager.class.getSimpleName();
 	private final static String taskFileName = "taskList";
 	private static TaskManager instance;
 	private FilePath fp;
@@ -65,7 +63,6 @@ public class TaskManager {
 	 */
 	public Task addTask(String description){
 		int lastIndex = fio.load(fp).size()-1;
-		Log.d(TAG, "Last index: " + lastIndex);
 		int id;
 		if(lastIndex < 0){
 			id = 0;
@@ -88,7 +85,6 @@ public class TaskManager {
 	public boolean removeTask(int pos, String description){
 		ArrayList<Task> tasks = fio.load(fp);
 		Task task = tasks.get(pos);
-		Log.d(TAG, task.getDescription() + ", " + description);
 		if(description.equals(task.getDescription()))
 			return fio.removeTask(fp, task);
 		return false;

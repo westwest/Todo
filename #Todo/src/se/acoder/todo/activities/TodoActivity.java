@@ -15,6 +15,8 @@ import android.widget.ListView;
 
 /**
  * 
+ * @author Johannes Westlund
+ *
  */
 public class TodoActivity extends BaseActivity {
 	private final static String TAG = TodoActivity.class.getSimpleName();

@@ -3,7 +3,7 @@ package se.acoder.todo.file;
 import android.content.Context;
 
 /**
- * 
+ * Represent a FilePath on the Android file system.
  * @author Johannes Westlund
  *
  */

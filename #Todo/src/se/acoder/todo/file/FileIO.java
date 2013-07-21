@@ -11,10 +11,13 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.util.Log;
 
+/**
+ * Manages actual interaction with the Android file-system.
+ * @author Johannes Westlund
+ *
+ */
 public class FileIO {
-	private final static String TAG = FileIO.class.getSimpleName();
 	private static FileIO instance;
 	
 	/**
@@ -45,9 +48,7 @@ public class FileIO {
 			return true;
 			
 		} catch (FileNotFoundException e) {
-			Log.d(TAG, "File not found");
 		} catch (IOException e) {
-			Log.d(TAG, "IO-Exception");
 		}
 		return false;
 	}
@@ -72,16 +73,13 @@ public class FileIO {
 				writer.close();
 				return true;
 			} catch (FileNotFoundException e) {
-				Log.d(TAG, "Exception: File not found.");
 			} catch (IOException e) {
-				Log.d("TAG", "Exception: IO");
 			}
 		}
 		return false;
 	}
 
 	public boolean removeTask(FilePath path, Task task){
-		Log.i(TAG, "Attempting removeTask");
 		if(fileExists(path)){
 			try {
 				File f = new File(path.getURI());
@@ -90,11 +88,8 @@ public class FileIO {
 				String id = task.getId()+"";
 				String line;
 				long lastPos = 0;
-				Log.i(TAG, "Tries to find task '"+id+"'");
 				while(!found && (line = raf.readLine()) != null){
-					Log.d(TAG, "Current row: '"+line+"'");
 					if(line.split(";")[0].equals(id)){
-						Log.d(TAG, "Matching row was found");
 						found = true;
 						String restOfFile = "";
 						String tempStr;
@@ -113,9 +108,7 @@ public class FileIO {
 				}
 				raf.close();
 			} catch (FileNotFoundException e) {
-				Log.d(TAG,"File not found.");
 			} catch (IOException e) {
-				Log.d(TAG, "IO Exception");
 			}
 		}
 		return false;
@@ -139,22 +132,15 @@ public class FileIO {
 					new InputStreamReader(c.openFileInput(path.getName())));
 			String rawline;
 			//Skip first line
-			Log.i(TAG, "Skipping: "+ br.readLine());
 			while( (rawline = br.readLine()) != null){
-				Log.d(TAG, "Raw line: "+ rawline);
 				String[] line = rawline.split(";");
-				Log.d(TAG, "Formatted line: "+ line[0]+ ", "+line[1] );
 				Task task = new Task(Integer.parseInt(line[0]), line[1]);
 				lines.add(task);
 			}
 			return lines;
 			
 		} catch (FileNotFoundException e) {
-			Log.d(TAG, "[load()] File Not Found, " + path.getName());
-			e.printStackTrace();
 		} catch (IOException e) {
-			Log.d(TAG, "[load()] IOException");
-			e.printStackTrace();
 		}
 		return null;
 	}

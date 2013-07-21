@@ -2,13 +2,16 @@ package se.acoder.todo.activities;
 import se.acoder.todo.R;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * 
+ * @author Johannes Westlund
+ *
+ */
 public class AddActivity extends BaseActivity {
-	private final static String TAG = AddActivity.class.getSimpleName();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +23,6 @@ public class AddActivity extends BaseActivity {
 		EditText description = (EditText) findViewById(R.id.task_description);
 		if(description.getText().length() != 0){
 			if(getTaskManager().addTask(description.getText().toString()) == null){
-				Log.w(TAG, "Task was not created successfully.");
 				Toast.makeText(this, "Error creating task", Toast.LENGTH_LONG).show();
 			}
 			else{
